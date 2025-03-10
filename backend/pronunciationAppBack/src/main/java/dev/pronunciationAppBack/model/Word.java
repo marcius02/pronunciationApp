@@ -1,8 +1,6 @@
 package dev.pronunciationAppBack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 
 import java.util.List;
@@ -21,6 +19,18 @@ public class Word {
 
     @OneToMany(mappedBy = "word")
     private List<Pronunciation> pronunciations;
+
+    @ManyToMany
+    @JoinTable(name = "word_category",
+            joinColumns = @JoinColumn(name = "WORD_ID_FK"),
+            inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID_FK"))
+    private List<Category> categories;
+
+    @ManyToOne
+    private LevelWord levelWord;
+
+    @OneToMany(mappedBy = "word")
+    private List<StageWord> stageWords;
 
     public Word() {}
 
